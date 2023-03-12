@@ -53,19 +53,21 @@ def vypocet(mena,castka,operace):
     if operace == "koupit":
         vystupniCena = castka * mena * (1 - priplatek)
         vystupniPoplatek = castka * mena * priplatek
-        return (vystupniCena,vystupniPoplatek)
+        pocatecniText = "Vyplácená částka je:"
+        return (pocatecniText,vystupniCena,vystupniPoplatek)
 
     elif operace == "prodat":
         vystupniCena = castka * mena * (1 + priplatek)
         vystupniPoplatek = castka * mena * priplatek
-        return (vystupniCena,vystupniPoplatek)
+        pocatecniText = "Vybíraná částka je:"
+        return (pocatecniText,vystupniCena,vystupniPoplatek)
 
 def aktualizaceVystupu():
     castka = float(vstupCastka.get())
     mena2 = kurzy.get(mena.get())
     operace2 = operace.get()
-    vystupniCena,vystupniPoplatek = vypocet(mena2,castka,operace2)
-    vystup["text"] = "Celková částka je: {:.2f} Kč, základ je:{:.2f} a poplatek: {:.2f}".format(vystupniCena,castka,vystupniPoplatek)
+    pocatecniText,vystupniCena,vystupniPoplatek = vypocet(mena2,castka,operace2)
+    vystup["text"] = "{} {:.2f} Kč, základ je:{:.2f} a poplatek: {:.2f}".format(pocatecniText,vystupniCena,castka,vystupniPoplatek)
 
 def aktualizaceHodin():
     hodiny["text"]= datetime.now().strftime("%H:%M:%S")
@@ -76,7 +78,7 @@ hodiny.grid(row=0,column=3,sticky=E)
 
 aktualizaceHodin()
 
-vystup = Label(hlavni,text=vystupText)
+vystup = Label(hlavni,text=vystupText,font='bold',foreground="red")
 vystup.grid(row=7,column=0,columnspan=5)
 
 tlacitkoVypocet = Button(text="Vypočítat",command=aktualizaceVystupu)
