@@ -12,18 +12,19 @@ kurzovniListekOkno.title("Kurzovní lístek")
 kurzovniListekOkno.minsize(300,100)
 
 kurzy = {
-    "USD": 22.21,
-    "EUR": 23.67,
-    "GBP": 26.73,
-    "JPY": 0.160,
-    "PXN": 1.2,
+    "USD": [22.21,"USA",1500],
+    "EUR": [23.67,"EU",235],
+    "GBP": [26.73,"Velká Británie",340],
+    "JPY": [0.160,"Japonsko",150_000],
+    "PXN": [1.2,"Mexiko",25000]
 }
 
+
 # Hlavni komponenta vedlejisho okna - pomoci Text()
-kurzovniListek = Text(kurzovniListekOkno,width=30,height=10) 
+kurzovniListek = Text(kurzovniListekOkno,width=60,height=10) 
 kurzovniListek.pack()
-for meny,kurz in kurzy.items():
-    kurzovniListek.insert(END,f"1 {meny} = {kurz} CZK\n")
+for meny,klic in kurzy.items():
+    kurzovniListek.insert(END,f"{klic[1]} - Množství : {klic[2]} - 1 {meny} = {klic[0]} CZK\n")
 kurzovniListek.grid(row=0,column=2,rowspan=10)
 
 operace = StringVar(value="koupit") # Promena pro vyber operace
@@ -69,6 +70,7 @@ def vypocet(mena,castka,operace): # Hlavni vypocet, vstupem je zvolena mena, zad
 def aktualizaceVystupu(): # Aktualizuje text v Labelu vystup na 7 radku
     castka = float(vstupCastka.get())
     mena2 = kurzy.get(mena.get())
+    mena2 = mena2[0]
     operace2 = operace.get()
     pocatecniText,vystupniCena,vystupniPoplatek = vypocet(mena2,castka,operace2)
     vystup["text"] = "{} {:.2f} Kč, základ je:{:.2f} a poplatek: {:.2f}".format(pocatecniText,vystupniCena,castka,vystupniPoplatek)
