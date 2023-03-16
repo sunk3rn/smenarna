@@ -77,6 +77,7 @@ def aktualizaceVystupu(): # Aktualizuje text v Labelu vystup na 7 radku
 
 def aktualizaceHodin(): # Aktualizuje hodiny
     hodiny["text"]= datetime.now().strftime("%H:%M:%S")
+    kurzovniListek.pack(fill=BOTH, expand=1)
     hlavni.after(1000, aktualizaceHodin)
 
 hodiny = Label(hlavni)
