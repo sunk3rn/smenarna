@@ -1,5 +1,6 @@
 from tkinter import *
 from datetime import datetime
+from tkinter import messagebox
 
 #Hlavni okno
 hlavni = Tk()
@@ -68,12 +69,19 @@ def vypocet(mena,castka,operace): # Hlavni vypocet, vstupem je zvolena mena, zad
         return (pocatecniText,vystupniCena,vystupniPoplatek)
 
 def aktualizaceVystupu(): # Aktualizuje text v Labelu vystup na 7 radku
-    castka = float(vstupCastka.get())
-    mena2 = kurzy.get(mena.get())
-    mena2 = mena2[0]
-    operace2 = operace.get()
-    pocatecniText,vystupniCena,vystupniPoplatek = vypocet(mena2,castka,operace2)
-    vystup["text"] = "{} {:.2f} Kč, základ je:{:.2f} a poplatek: {:.2f}".format(pocatecniText,vystupniCena,castka,vystupniPoplatek)
+    try:
+        castka = float(vstupCastka.get())
+    except:
+        messagebox.showwarning(title="Chyba", message="Zadali jste neplatnou částku!")
+    if castka <= 0:
+        messagebox.showwarning(title="Chyba", message="Zadejte částku větší jak 0!")
+        return
+    else:
+        mena2 = kurzy.get(mena.get())
+        mena2 = mena2[0]
+        operace2 = operace.get()
+        pocatecniText,vystupniCena,vystupniPoplatek = vypocet(mena2,castka,operace2)
+        vystup["text"] = "{} {:.2f} Kč, základ je:{:.2f} a poplatek: {:.2f}".format(pocatecniText,vystupniCena,castka,vystupniPoplatek)
 
 def aktualizaceHodin(): # Aktualizuje hodiny
     hodiny["text"]= datetime.now().strftime("%H:%M:%S")
