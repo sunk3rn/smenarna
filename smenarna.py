@@ -23,7 +23,7 @@ kurzy = {
 
 # Hlavni komponenta vedlejisho okna - pomoci Text()
 kurzovniListek = Text(kurzovniListekOkno,width=60,height=10) 
-kurzovniListek.pack()
+kurzovniListek.pack(fill=BOTH, expand=1)
 for meny,klic in kurzy.items():
     kurzovniListek.insert(END,f"{klic[1]} - Množství : {klic[2]} - 1 {meny} = {klic[0]} CZK\n")
 kurzovniListek.grid(row=0,column=2,rowspan=10)
@@ -85,6 +85,7 @@ def aktualizaceVystupu(): # Aktualizuje text v Labelu vystup na 7 radku
 
 def aktualizaceHodin(): # Aktualizuje hodiny
     hodiny["text"]= datetime.now().strftime("%H:%M:%S")
+    kurzovniListek.pack(fill=BOTH, expand=1)
     hlavni.after(1000, aktualizaceHodin)
 
 hodiny = Label(hlavni)
